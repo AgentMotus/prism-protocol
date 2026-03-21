@@ -50,6 +50,23 @@
       "agentId": 1,
       "agentURI": "data:application/json;base64 (on-chain)",
       "gasUsed": "0.064 CELO"
+    },
+    {
+      "timestamp": "2026-03-21T12:04:00Z",
+      "type": "context_creation",
+      "action": "create_context_wallet",
+      "chain": "celo-mainnet (42220)",
+      "details": "Created context wallet delegated to AgentMotus with caveats: 1 CELO/tx limit, 5 CELO/day, 30-day TTL",
+      "txHash": "0x705301dbc0d1e7e88a53a2320408611fef162f1371680396a76e1cac8b6fed0c",
+      "contextWallet": "0x69CA5D2dD933236b77b16Dabe90144a586ee9554",
+      "delegate": "0xd0237E6B4aA31a1740E84423ed43A84D1Cb01fd8",
+      "owner": "0x64608C2d5E4685830348e9155bAB423bf905E9c9",
+      "caveats": {
+        "spendingLimit": "1 CELO/tx",
+        "dailyLimit": "5 CELO/day",
+        "ttl": "30 days"
+      },
+      "gasUsed": "0.044 CELO"
     }
   ]
 }
