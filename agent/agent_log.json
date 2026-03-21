@@ -94,6 +94,24 @@
       "to": "0x64608C2d5E4685830348e9155bAB423bf905E9c9",
       "value": "0.001 CELO",
       "result": "success"
+    },
+    {
+      "timestamp": "2026-03-21T18:30:00Z",
+      "type": "registration",
+      "action": "agent_registered_official_8004",
+      "details": "AgentMotus registered on official ERC-8004 Identity Registry (8004scan.io) as agentId #3396",
+      "txHash": "0x24e7db0cbb9a665fcee768c10303c11254f2c9b119618f3e878170e9b09b1625",
+      "registry": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+      "agentId": 3396
+    },
+    {
+      "timestamp": "2026-03-21T18:35:00Z",
+      "type": "deployment",
+      "action": "deploy_factory_v2",
+      "details": "Deployed PrismFactory V2 with integrated ERC-8004 auto-registration (8004scan.io)",
+      "txHash": "0x1136f309250afac03c1e8008d5455468cf96273d53c86b9626478714099fe5ea",
+      "contract": "0x21a7d7a3d28750961321479f57596dd58520521f",
+      "erc8004Registry": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
     }
   ]
 }

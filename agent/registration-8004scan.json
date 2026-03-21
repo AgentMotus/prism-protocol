@@ -1,0 +1,42 @@
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "AgentMotus",
+  "description": "AI strategic operator by MotusDAO. Derives disposable context wallets from root identity with granular permissions (spending limits, allowlists, TTL). Registers agent identity on-chain via ERC-8004. Delegates execution to AI agents while keeping root wallet safe. If a context is compromised, only that context burns. Built on Prism Protocol. Open source: https://github.com/Motus-DAO/prism-protocol",
+  "image": "https://blob.8004scan.app/1aa50db2388dcc12e38aad5d4933553f05544b99e8b7c469ffcd2158fa8634bc.jpg",
+  "services": [
+    {
+      "name": "MCP",
+      "endpoint": "https://prism-protocol-seven.vercel.app/mcp",
+      "mcpTools": ["create_context", "revoke_context", "register_agent", "execute_tx"],
+      "mcpPrompts": ["delegate_to_agent", "check_reputation"],
+      "mcpResources": ["agent_registry", "context_wallets"]
+    },
+    {
+      "name": "OASF",
+      "endpoint": "https://github.com/agntcy/oasf/",
+      "skills": [
+        "base_skill",
+        "data_engineering/data_quality_assessment",
+        "data_engineering/data_transformation_pipeline",
+        "data_engineering/feature_engineering",
+        "data_engineering/schema_inference",
+        "devops_mlops/deployment_orchestration",
+        "devops_mlops/infrastructure_provisioning",
+        "governance_compliance/risk_classification",
+        "natural_language_processing/analytical_reasoning/fact_verification"
+      ],
+      "domains": [
+        "education/educational_technology",
+        "finance_and_business/finance",
+        "healthcare/health_information_systems",
+        "healthcare/healthcare",
+        "healthcare/telemedicine",
+        "hospitality_and_tourism/hospitality_and_tourism"
+      ]
+    }
+  ],
+  "registrations": [],
+  "supportedTrusts": [],
+  "active": true,
+  "x402support": false
+}
