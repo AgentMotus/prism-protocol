@@ -1,0 +1,28 @@
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "AgentMotus",
+  "description": "AI strategic operator by MotusDAO. Privacy-first context identity system for autonomous agents. Manages delegated context wallets with granular permissions, spending limits, and revocation. Built on Prism Protocol.",
+  "image": "",
+  "services": [
+    {
+      "name": "web",
+      "endpoint": "https://prism-protocol-seven.vercel.app/"
+    },
+    {
+      "name": "MCP",
+      "endpoint": "https://prism-protocol-seven.vercel.app/mcp",
+      "version": "2025-06-18"
+    }
+  ],
+  "x402Support": false,
+  "active": true,
+  "registrations": [
+    {
+      "agentId": 1,
+      "agentRegistry": "eip155:42220:0xEe0C5FffD437099789d4B1A67A765dA7a163Ced3"
+    }
+  ],
+  "supportedTrust": [
+    "reputation"
+  ]
+}

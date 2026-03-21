@@ -1,0 +1,31 @@
+{
+  "name": "AgentMotus",
+  "version": "1.0.0",
+  "description": "AI strategic operator by MotusDAO. Manages privacy-preserving context wallets for autonomous agent operations on EVM chains.",
+  "author": "MotusDAO (Gerry Alvarado)",
+  "repository": "https://github.com/Motus-DAO/prism-protocol",
+  "branch": "ethereum-root-identity",
+  "chain": "celo-mainnet",
+  "contracts": {
+    "PrismFactory": "0xaC39210F2dBcD120D9bCDE7DEeF04f2c30F8E24F",
+    "PrismRegistry": "0xEe0C5FffD437099789d4B1A67A765dA7a163Ced3"
+  },
+  "capabilities": [
+    "context-wallet-creation",
+    "delegated-execution",
+    "spending-limits",
+    "allowlist-enforcement",
+    "ttl-expiry",
+    "context-revocation",
+    "agent-identity-registry",
+    "reputation-feedback"
+  ],
+  "rootIdentity": "0xF6320E6195A816E44F9599F322D489cAbbC45D24",
+  "erc8004": {
+    "agentId": 1,
+    "agentRegistry": "eip155:42220:0xEe0C5FffD437099789d4B1A67A765dA7a163Ced3"
+  },
+  "framework": "OpenClaw + Foundry",
+  "model": "claude-opus-4-6",
+  "createdAt": "2026-03-21T07:55:00Z"
+}
