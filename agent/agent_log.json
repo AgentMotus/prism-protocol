@@ -67,6 +67,33 @@
         "ttl": "30 days"
       },
       "gasUsed": "0.044 CELO"
+    },
+    {
+      "timestamp": "2026-03-21T12:12:00Z",
+      "type": "funding",
+      "action": "fund_context_wallet",
+      "details": "Funded context wallet with 0.01 CELO",
+      "txHash": "funding tx from deployer",
+      "contextWallet": "0x69CA5D2dD933236b77b16Dabe90144a586ee9554"
+    },
+    {
+      "timestamp": "2026-03-21T12:13:00Z",
+      "type": "funding",
+      "action": "fund_agent_wallet",
+      "details": "Funded AgentMotus delegate wallet with 0.01 CELO for gas",
+      "txHash": "0xe4594cdf80bead5beb4a816261532a29aebddadedfc2a1a46473f2fade9b2396",
+      "agentWallet": "0xd0237E6B4aA31a1740E84423ed43A84D1Cb01fd8"
+    },
+    {
+      "timestamp": "2026-03-21T12:14:00Z",
+      "type": "execution",
+      "action": "agent_executed_from_context",
+      "details": "AgentMotus executed tx from context wallet: sent 0.001 CELO back to owner. Proves delegate can operate within caveats.",
+      "txHash": "0x3f1d3338e3122d1ed442b36bd7a11987d540c04ecf4091c9077ad6a3386f2676",
+      "from_context": "0x69CA5D2dD933236b77b16Dabe90144a586ee9554",
+      "to": "0x64608C2d5E4685830348e9155bAB423bf905E9c9",
+      "value": "0.001 CELO",
+      "result": "success"
     }
   ]
 }
