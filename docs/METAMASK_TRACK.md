@@ -56,3 +56,15 @@ Owner calls `revoke()` on context wallet and show subsequent execution fails.
 - Tx hash: revoke (optional but recommended)
 - Short clip (20–30s) showing request → execute → revoke
 - Link to `scripts/venice-agent.sh` and Prism contracts
+
+### Live Proof (Celo Mainnet)
+- Success execution (delegate within limits):
+  - `0xd167bf08543df816c305287864f0400ce54b96331434ffb8ce137bb818fc5a0c`
+- Context revoked by owner:
+  - `0xec1bd5804777ca2e35769478f8430b21186c0fd1d29f1dbeaeb44525de7f2f91`
+- Post-revoke execution attempt:
+  - Reverted with `ContextRevoked` (expected)
+- Signed EIP-712 artifact:
+  - `agent/metamask_delegation_proof.json`
+- Tx evidence artifact:
+  - `agent/metamask_track_txs.json`

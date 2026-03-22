@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-03-22T08:31:23.354626Z",
+  "network": "celo-mainnet",
+  "context": "0x69CA5D2dD933236b77b16Dabe90144a586ee9554",
+  "delegator": "0x64608C2d5E4685830348e9155bAB423bf905E9c9",
+  "delegate": "0xd0237E6B4aA31a1740E84423ed43A84D1Cb01fd8",
+  "limit": "2 CELO / 24h (signed offchain via EIP-712)",
+  "tx_success": "0xd167bf08543df816c305287864f0400ce54b96331434ffb8ce137bb818fc5a0c",
+  "tx_revoke": "0xec1bd5804777ca2e35769478f8430b21186c0fd1d29f1dbeaeb44525de7f2f91",
+  "post_revoke_expected": "execution should fail",
+  "post_revoke_exit_code": 1
+}
