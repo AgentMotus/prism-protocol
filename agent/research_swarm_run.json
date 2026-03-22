@@ -1,0 +1,106 @@
+{
+  "run_id": "research-swarm-20260322-1928",
+  "title": "Hybrid research workflow \u2014 psychology/academic use case",
+  "human_owner": "Gerry",
+  "created_at": "2026-03-22T23:27:45Z",
+  "agents": {
+    "orchestrator": {
+      "ens": "orchestrator.prism-protocol.eth",
+      "wallet": "0x64608C2d5E4685830348e9155bAB423bf905E9c9"
+    },
+    "research": {
+      "ens": "agentmotus.prism-protocol.eth",
+      "wallet": "0xd0237E6B4aA31a1740E84423ed43A84D1Cb01fd8",
+      "agent_id_8004": "3396"
+    },
+    "validator": {
+      "ens": "validator.prism-protocol.eth",
+      "wallet": "pending"
+    },
+    "publisher": {
+      "ens": "publisher.prism-protocol.eth",
+      "wallet": "pending"
+    }
+  },
+  "inputs": {
+    "research_documents": [
+      {
+        "name": "Root-Structured Intelligence",
+        "path_or_url": "research-inputs/research-1.pdf"
+      },
+      {
+        "name": "Algebraic Structures of Collective Consciousness",
+        "path_or_url": "research-inputs/research-2.pdf"
+      }
+    ],
+    "constraints": [
+      "no diagnosis",
+      "human approval required before publication",
+      "private reasoning only"
+    ]
+  },
+  "timeline": [
+    {
+      "step": "scope_approved",
+      "actor": "human",
+      "status": "done",
+      "timestamp": "2026-03-22T23:28:45Z"
+    },
+    {
+      "step": "research_draft_generated",
+      "actor": "agentmotus.prism-protocol.eth",
+      "status": "done",
+      "timestamp": "2026-03-22T23:30:45Z",
+      "artifact": "research-inputs/research_draft.md"
+    },
+    {
+      "step": "validation_review",
+      "actor": "validator.prism-protocol.eth",
+      "status": "done",
+      "timestamp": "2026-03-22T23:31:45Z",
+      "artifact": "research-inputs/validation_report.md"
+    },
+    {
+      "step": "human_signoff",
+      "actor": "human",
+      "status": "done",
+      "timestamp": "2026-03-22T23:32:45Z",
+      "artifact": "research-inputs/human_signoff.md"
+    },
+    {
+      "step": "onchain_execution",
+      "actor": "agentmotus.prism-protocol.eth",
+      "status": "done",
+      "timestamp": "2026-03-22T23:33:45Z",
+      "tx_hash": "0xd167bf08543df816c305287864f0400ce54b96331434ffb8ce137bb818fc5a0c"
+    },
+    {
+      "step": "safety_revoke_test",
+      "actor": "orchestrator.prism-protocol.eth",
+      "status": "done",
+      "timestamp": "2026-03-22T23:34:45Z",
+      "tx_hash": "0xec1bd5804777ca2e35769478f8430b21186c0fd1d29f1dbeaeb44525de7f2f91",
+      "result": "post-revoke execute reverted: ContextRevoked"
+    }
+  ],
+  "proofs": {
+    "tx_hashes": [
+      "0xc058d3e61e267c4e2779b9e0ea530f230f87e7055939b54578120add7a3b6e62",
+      "0xd167bf08543df816c305287864f0400ce54b96331434ffb8ce137bb818fc5a0c",
+      "0xec1bd5804777ca2e35769478f8430b21186c0fd1d29f1dbeaeb44525de7f2f91"
+    ],
+    "ens_profiles": [
+      "agentmotus.prism-protocol.eth",
+      "orchestrator.prism-protocol.eth"
+    ],
+    "artifacts": [
+      "agent/metamask_delegation_proof.json",
+      "agent/metamask_track_txs.json",
+      "agent/venice_execution_log.json",
+      "research-inputs/research_draft.md",
+      "research-inputs/validation_report.md",
+      "research-inputs/human_signoff.md"
+    ],
+    "ipfs_cid": "pending"
+  }
+}
