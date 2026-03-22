@@ -1,0 +1,22 @@
+{
+  "type": "metamask_eip712_delegation_intent",
+  "network": {
+    "name": "Celo Mainnet",
+    "chainId": 42220
+  },
+  "domain": {
+    "name": "Prism Delegation",
+    "version": "1",
+    "chainId": 42220,
+    "verifyingContract": "0x21a7d7A3D28750961321479f57596dd58520521F"
+  },
+  "message": {
+    "delegator": "0x64608C2d5E4685830348e9155bAB423bf905E9c9",
+    "delegate": "0xd0237E6B4aA31a1740E84423ed43A84D1Cb01fd8",
+    "maxValueWei": "2000000000000000000",
+    "ttlSeconds": "86400",
+    "issuedAt": "1774168032"
+  },
+  "signature": "0xf909882a961fe1709eba1e7e91f6da09644e1077599e2fdd627be23dfa207b75782afd8b19c3e5b32193e59796f38489d15101a2d8bcc2c3c5ccab29a4bfa2551c",
+  "notes": "Signed in MetaMask using eth_signTypedData_v4"
+}
