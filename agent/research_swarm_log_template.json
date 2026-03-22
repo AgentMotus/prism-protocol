@@ -1,0 +1,92 @@
+{
+  "run_id": "research-swarm-YYYYMMDD-HHMM",
+  "title": "Hybrid research workflow",
+  "human_owner": "Gerry",
+  "created_at": "ISO-8601",
+  "agents": {
+    "orchestrator": {
+      "ens": "orchestrator.prism-protocol.eth",
+      "wallet": "0x64608C2d5E4685830348e9155bAB423bf905E9c9"
+    },
+    "research": {
+      "ens": "agentmotus.prism-protocol.eth",
+      "wallet": "0xd0237E6B4aA31a1740E84423ed43A84D1Cb01fd8",
+      "agent_id_8004": "3396"
+    },
+    "validator": {
+      "ens": "validator.prism-protocol.eth",
+      "wallet": "TBD"
+    },
+    "publisher": {
+      "ens": "publisher.prism-protocol.eth",
+      "wallet": "TBD"
+    }
+  },
+  "inputs": {
+    "research_documents": [
+      {
+        "name": "paper-1",
+        "path_or_url": "TBD"
+      },
+      {
+        "name": "paper-2",
+        "path_or_url": "TBD"
+      }
+    ],
+    "constraints": [
+      "no diagnosis",
+      "human approval required before publication",
+      "private reasoning only"
+    ]
+  },
+  "timeline": [
+    {
+      "step": "scope_approved",
+      "actor": "human",
+      "status": "done",
+      "timestamp": "ISO-8601"
+    },
+    {
+      "step": "research_draft_generated",
+      "actor": "agentmotus.prism-protocol.eth",
+      "status": "done",
+      "timestamp": "ISO-8601",
+      "artifact": "research_draft.md"
+    },
+    {
+      "step": "validation_review",
+      "actor": "validator.prism-protocol.eth",
+      "status": "done",
+      "timestamp": "ISO-8601",
+      "artifact": "validation_report.md"
+    },
+    {
+      "step": "human_signoff",
+      "actor": "human",
+      "status": "done",
+      "timestamp": "ISO-8601"
+    },
+    {
+      "step": "onchain_execution",
+      "actor": "agentmotus.prism-protocol.eth",
+      "status": "done",
+      "timestamp": "ISO-8601",
+      "tx_hash": "TBD"
+    },
+    {
+      "step": "receipts_published_ipfs",
+      "actor": "publisher.prism-protocol.eth",
+      "status": "done",
+      "timestamp": "ISO-8601",
+      "cid": "TBD"
+    }
+  ],
+  "proofs": {
+    "tx_hashes": [],
+    "ens_profiles": [
+      "agentmotus.prism-protocol.eth",
+      "orchestrator.prism-protocol.eth"
+    ],
+    "ipfs_cid": "TBD"
+  }
+}
