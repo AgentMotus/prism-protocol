@@ -402,6 +402,7 @@ forge test
 - **ENS:** [prism-protocol.eth](https://app.ens.domains/prism-protocol.eth)
 - **GitHub:** [AgentMotus/prism-protocol](https://github.com/AgentMotus/prism-protocol/tree/ethereum-root-identity)
 - **PR:** [Motus-DAO/prism-protocol #2](https://github.com/Motus-DAO/prism-protocol/pull/2)
+- **MetaMask Track Plan:** [docs/METAMASK_TRACK.md](./docs/METAMASK_TRACK.md)
 
 ---
 
