@@ -1,0 +1,52 @@
+{
+  "run": "swarm-final-onchain-v1",
+  "timestamp_utc": "2026-03-23T00:00:00Z",
+  "chain_id": 42220,
+  "participants": {
+    "root": "0x64608C2d5E4685830348e9155bAB423bf905E9c9",
+    "research_delegate": "0xd0237E6B4aA31a1740E84423ed43A84D1Cb01fd8",
+    "validator_delegate": "0x27ec91c68A7797C774C44923681794D5Eaa94773",
+    "publisher_delegate": "0x1BeF0E6a26dE6EfCB6852A9dABdBa32FAB410391",
+    "research_context": "0x69CA5D2dD933236b77b16Dabe90144a586ee9554",
+    "validator_context": "0xa899000614118E3D038c5033901c7e9F49D54cD8",
+    "publisher_context": "0x668Ed30bdD0db9480994A5AF1BA0e9dC9A8B90FB"
+  },
+  "transactions": [
+    {
+      "step": "create_validator_context",
+      "tx": "0xba3c0d4fb28edd6da009b801d13021b3fbeb9b8baffd1e19db38e94049fce4a7"
+    },
+    {
+      "step": "create_publisher_context",
+      "tx": "0x749e12e175c48b80b17fb0aa29a389d636389aa06e92bf2dc20be8eb98ac6b09"
+    },
+    {
+      "step": "fund_validator_context",
+      "tx": "0x22f1253f762b57d063ede3ea3d0a28481e0adf9cf918d0b4200c6b4dc90333fb"
+    },
+    {
+      "step": "fund_publisher_context",
+      "tx": "0x52984eba3ad47c266f3fe1c5a7a1e44ecabe1b0ad9a999ff2a49344eb4b0b732"
+    },
+    {
+      "step": "fund_validator_delegate_gas",
+      "tx": "0x482b47aceec3345b212a1046bdeb1e5a9ae44a7b8c00f5e1b65173138a213a5a"
+    },
+    {
+      "step": "fund_publisher_delegate_gas",
+      "tx": "0xeefaf4a838b283eaad5e27c980ffe9227809e5a7a48cb4a9bc0f4c29667bf3a4"
+    },
+    {
+      "step": "validator_execute_to_publisher_context",
+      "tx": "0xd075c366040b124c1e4b50f0e44992eb6736cf32aab9edee6b028a43fc4519f5"
+    },
+    {
+      "step": "publisher_execute_to_root",
+      "tx": "0xc5a273e79e4cb6204a83eeade42ab0608cf93d7b5d8aae54cc470af2feb43d0a"
+    }
+  ],
+  "notes": [
+    "Factory deployed contract in this branch uses createContext((string,uint256,uint256,address[],uint256,address),uint256)",
+    "Delegate EOAs require native CELO for tx gas when calling execute() unless gas sponsorship path is enabled"
+  ]
+}
