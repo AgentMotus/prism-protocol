@@ -403,6 +403,8 @@ forge test
 - **GitHub:** [AgentMotus/prism-protocol](https://github.com/AgentMotus/prism-protocol/tree/ethereum-root-identity)
 - **PR:** [Motus-DAO/prism-protocol #2](https://github.com/Motus-DAO/prism-protocol/pull/2)
 - **MetaMask Track Plan:** [docs/METAMASK_TRACK.md](./docs/METAMASK_TRACK.md)
+- **PsyResearch Swarm Runbook:** [docs/PSYRESEARCH_SWARM_RUNBOOK.md](./docs/PSYRESEARCH_SWARM_RUNBOOK.md)
+- **PsyResearch Swarm Skill:** [skills/psyresearch-swarm/SKILL.md](./skills/psyresearch-swarm/SKILL.md)
 
 ---
 
