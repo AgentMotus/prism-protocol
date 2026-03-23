@@ -1,190 +1,136 @@
-# Prism Protocol — Agent Identity & Context Wallets on Celo
+---
+name: prism-ethereum-root-identity
+description: Install and operate Prism Protocol on the ethereum-root-identity branch for AI agents (Cursor/OpenClaw). Use when setting up agent wallets, creating bounded context wallets, registering identity (ERC-8004), assigning ENS subdomains, and running revoke-safe onchain execution on Celo.
+---
 
-Use this skill when an agent needs to operate on-chain with scoped permissions, verifiable identity, and spending limits.
+# Prism Protocol Skill (Technical)
 
-## What You Get
+Use this to onboard any agent into Prism quickly and safely.
 
-- **Context Wallet**: a smart wallet derived from your root, with enforced spending limits, daily caps, TTL, and instant revocation
-- **ERC-8004 Identity**: on-chain agent registration with reputation tracking
-- **Paymaster**: optional gas sponsorship for context wallets
+## Network + Contracts
+- Chain: **Celo Mainnet (42220)**
+- RPC: `https://forno.celo.org`
+- PrismFactory V2: `0x21a7d7A3D28750961321479f57596dd58520521F`
+- PrismRegistry: `0xEe0C5FffD437099789d4B1A67A765dA7a163Ced3`
+- PrismPaymaster: `0x0240A986CC1CB5052547cd922ba5f9657e157A4c`
+- ERC-8004 Registry: `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`
 
-## Requirements
+## 0) Bootstrap (Cursor/OpenClaw)
+```bash
+git clone https://github.com/AgentMotus/prism-protocol.git
+cd prism-protocol
+git checkout ethereum-root-identity
 
-- A **private key** with CELO balance (root wallet) — stored at a path you control
-- `cast` and `forge` from [Foundry](https://book.getfoundry.sh/getting-started/installation)
-- Celo Mainnet RPC: `https://forno.celo.org`
+# tools
+curl -L https://foundry.paradigm.xyz | bash
+~/.foundry/bin/foundryup
 
-## Contract Addresses (Celo Mainnet — 42220)
-
+# optional but useful
+sudo apt-get update && sudo apt-get install -y jq
 ```
-PrismFactory V2:    0x21a7d7A3D28750961321479f57596dd58520521F
-PrismRegistry:      0xEe0C5FffD437099789d4B1A67A765dA7a163Ced3
-PrismPaymaster:     0x0240A986CC1CB5052547cd922ba5f9657e157A4c
-8004scan Registry:  0x8004A169FB4a3325136EB29fA0ceB6D2e539a432
+
+If `cast` is not in PATH, use `~/.foundry/bin/cast`.
+
+## 1) Key Storage Rule (non-negotiable)
+Never store private keys in repo files.
+Use host-only location:
+```bash
+mkdir -p ~/.config/prism/keys
+chmod 700 ~/.config/prism ~/.config/prism/keys
 ```
 
-## Quick Start (4 steps)
+## 2) Create Agent Wallet (delegate key)
+```bash
+~/.foundry/bin/cast wallet new --json > ~/.config/prism/keys/agent.json
+chmod 600 ~/.config/prism/keys/agent.json
+```
+Quick extract:
+```bash
+AGENT_ADDR=$(python3 - <<'PY'
+import json,os
+p=os.path.expanduser('~/.config/prism/keys/agent.json')
+print(json.load(open(p))[0]['address'])
+PY)
+AGENT_KEY=$(python3 - <<'PY'
+import json,os
+p=os.path.expanduser('~/.config/prism/keys/agent.json')
+print(json.load(open(p))[0]['private_key'])
+PY)
+```
 
-### Step 1 — Generate Agent Wallet
-
-Create a new wallet for the agent. This is NOT the root — it's the delegate key the agent will use.
+## 3) Create Context Wallet from Root
+Inputs required:
+- `ROOT_KEY` (root wallet private key; never commit)
+- `AGENT_ADDR`
+- policy params (`spendingLimit`, `dailyLimit`, `ttl`, `allowlist`)
 
 ```bash
-cast wallet new --json | tee /tmp/agent-wallet.json
-# Save the private key securely:
-cat /tmp/agent-wallet.json | python3 -c "import sys,json; print(json.load(sys.stdin)[0]['private_key'])" > ~/.config/secrets/agent.key
-chmod 600 ~/.config/secrets/agent.key
-AGENT_ADDR=$(cat /tmp/agent-wallet.json | python3 -c "import sys,json; print(json.load(sys.stdin)[0]['address'])")
-echo "Agent wallet: $AGENT_ADDR"
-rm /tmp/agent-wallet.json
-```
+RPC=https://forno.celo.org
+FACTORY=0x21a7d7A3D28750961321479f57596dd58520521F
 
-### Step 2 — Create Context Wallet (requires root key)
+SPENDING_LIMIT=$(~/.foundry/bin/cast to-wei 1)   # 1 CELO per tx
+DAILY_LIMIT=$(~/.foundry/bin/cast to-wei 5)      # 5 CELO/day
+TTL=2592000                                       # 30 days
+SALT=$(~/.foundry/bin/cast keccak "agent-name-unique")
 
-The root wallet calls PrismFactory to create a context wallet delegated to the agent.
-
-```bash
-ROOT_KEY="<your-root-private-key>"
-AGENT_ADDR="<agent-wallet-from-step-1>"
-RPC="https://forno.celo.org"
-FACTORY="0x21a7d7A3D28750961321479f57596dd58520521F"
-
-# Parameters (adjust to your needs):
-#   spendingLimit: max CELO per transaction (in wei)
-#   dailyLimit:    max CELO per 24h rolling window (in wei)
-#   ttl:           seconds until context expires
-#   salt:          unique bytes32 (use agent name hash)
-
-SPENDING_LIMIT=$(cast to-wei 1)        # 1 CELO per tx
-DAILY_LIMIT=$(cast to-wei 5)           # 5 CELO per day
-TTL=2592000                            # 30 days
-SALT=$(cast keccak "my-agent-name")
-
-cast send "$FACTORY" \
+~/.foundry/bin/cast send "$FACTORY" \
   "createContextAndRegister(uint256,uint256,address[],uint256,address,bytes32,string)" \
   "$SPENDING_LIMIT" "$DAILY_LIMIT" "[]" "$TTL" "$AGENT_ADDR" "$SALT" \
-  "data:application/json;base64,$(echo -n '{"type":"https://eips.ethereum.org/EIPS/eip-8004#registration-v1","name":"MyAgent","description":"Autonomous agent","active":true}' | base64 -w0)" \
-  --rpc-url "$RPC" \
-  --private-key "$ROOT_KEY" \
-  --json
+  "data:application/json;base64,$(echo -n '{\"type\":\"https://eips.ethereum.org/EIPS/eip-8004#registration-v1\",\"name\":\"Agent\",\"description\":\"Prism scoped agent\",\"active\":true}' | base64 -w0)" \
+  --rpc-url "$RPC" --private-key "$ROOT_KEY" --json
 
-# The tx receipt logs contain the context wallet address.
-# Find it in the logs or compute it:
-CONTEXT=$(cast call "$FACTORY" \
-  "getContextAddress(address,bytes32)(address)" \
-  "$(cast wallet address --private-key $ROOT_KEY)" "$SALT" \
-  --rpc-url "$RPC")
-echo "Context wallet: $CONTEXT"
+ROOT_ADDR=$(~/.foundry/bin/cast wallet address --private-key "$ROOT_KEY")
+CONTEXT=$(~/.foundry/bin/cast call "$FACTORY" "getContextAddress(address,bytes32)(address)" "$ROOT_ADDR" "$SALT" --rpc-url "$RPC")
+echo "CONTEXT=$CONTEXT"
 ```
 
-### Step 3 — Fund the Context Wallet
-
-Send CELO to the context wallet so the agent can operate.
-
+## 4) Fund + Execute as Agent
 ```bash
-cast send "$CONTEXT" --value $(cast to-wei 0.5) \
-  --rpc-url "$RPC" \
-  --private-key "$ROOT_KEY"
-echo "Funded context with 0.5 CELO"
-```
+# root funds context
+~/.foundry/bin/cast send "$CONTEXT" --value $(~/.foundry/bin/cast to-wei 0.5) --rpc-url "$RPC" --private-key "$ROOT_KEY"
 
-### Step 4 — Agent Operates
-
-The agent uses its own key to execute transactions through the context wallet. The contract enforces all limits.
-
-```bash
-AGENT_KEY=$(cat ~/.config/secrets/agent.key)
-CONTEXT="<context-wallet-from-step-2>"
-RPC="https://forno.celo.org"
-
-# Send 0.001 CELO to any address:
-TARGET="0xRecipientAddress"
-VALUE=$(cast to-wei 0.001)
-
-cast send "$CONTEXT" \
+# agent executes within caveats
+TARGET=0x000000000000000000000000000000000000dEaD
+VALUE=$(~/.foundry/bin/cast to-wei 0.001)
+~/.foundry/bin/cast send "$CONTEXT" \
   "execute(address,uint256,bytes)(bytes)" \
   "$TARGET" "$VALUE" "0x" \
-  --rpc-url "$RPC" \
-  --private-key "$AGENT_KEY"
+  --rpc-url "$RPC" --private-key "$AGENT_KEY"
 ```
 
-## Key Operations
-
-### Check Balances
+## 5) Revoke (root only)
 ```bash
-cast balance "$CONTEXT" --rpc-url https://forno.celo.org   # context balance
-cast call "$CONTEXT" "spentToday()(uint256)" --rpc-url https://forno.celo.org  # daily spend
-cast call "$CONTEXT" "config()(uint256,uint256,address[],uint256,address,uint256)" --rpc-url https://forno.celo.org  # full config
+~/.foundry/bin/cast send "$CONTEXT" "revoke()" --rpc-url "$RPC" --private-key "$ROOT_KEY"
 ```
 
-### Revoke Context (root only)
-```bash
-cast send "$CONTEXT" "revoke()" \
-  --rpc-url https://forno.celo.org \
-  --private-key "$ROOT_KEY"
-```
+## 6) ENS + Identity Mapping (recommended)
+Assign one subdomain per role:
+- `orchestrator.prism-protocol.eth`
+- `agentmotus.prism-protocol.eth`
+- `validator.prism-protocol.eth`
+- `publisher.prism-protocol.eth`
 
-### Check Agent Reputation
-```bash
-REGISTRY="0xEe0C5FffD437099789d4B1A67A765dA7a163Ced3"
-AGENT_ID=1  # your agent's ID
+Keep matrix in README/SUBMISSION:
+- role, wallet, ENS, 8004 id, session label, tx hashes, CID.
 
-cast call "$REGISTRY" "getReputation(uint256)(uint256,uint256)" "$AGENT_ID" \
-  --rpc-url https://forno.celo.org
-```
+## 7) OpenClaw Session Layout (recommended)
+Create 4 isolated sessions/labels:
+- `swarm-orchestrator`
+- `swarm-research`
+- `swarm-validator`
+- `swarm-publisher`
 
-### Submit Feedback
-```bash
-cast send "$REGISTRY" \
-  "submitFeedback(uint256,uint8,string)" \
-  "$AGENT_ID" 5 "Task completed successfully" \
-  --rpc-url https://forno.celo.org \
-  --private-key "$ROOT_KEY"
-```
+Each session stores **only**:
+- role profile (address, ENS, limits, objective)
+- no private keys in workspace files.
 
-## Venice Private Inference (Optional)
+## 8) Artifacts to produce in every run
+- `research-inputs/research_draft.md`
+- `research-inputs/validation_report.md`
+- `research-inputs/human_signoff.md`
+- `agent/research_swarm_run.json`
+- `receipts-bundle.tar.gz`
+- IPFS CID in run json (`ipfs_cid`)
 
-For agents that need to reason privately before executing:
-
-```bash
-# Requires Venice API key at ~/.config/secrets/venice.key
-# Get one at https://venice.ai/settings/api
-
-./scripts/venice-agent.sh "Analyze balances and recommend an action"
-```
-
-This runs: gather on-chain data → Venice inference (no data retained) → execute within caveats → log everything.
-
-## Security Model
-
-```
-Root Wallet (YOU)
-│ • Creates contexts
-│ • Funds contexts  
-│ • Revokes contexts
-│ • Never shared with agents
-│
-└── Context Wallet (AGENT)
-    • Operates within limits
-    • Cannot exceed spending cap
-    • Cannot outlive TTL
-    • Cannot touch root funds
-    • If compromised → revoke, root is safe
-```
-
-## Caveat Reference
-
-| Caveat | Description | Example |
-|--------|-------------|---------|
-| `spendingLimit` | Max value per transaction | `1 ether` = 1 CELO/tx |
-| `dailyLimit` | Max total value per 24h window | `5 ether` = 5 CELO/day |
-| `allowlist` | Only these contract addresses allowed | `[0xUniswap, 0xAave]` |
-| `ttl` | Context expires after this duration | `2592000` = 30 days |
-| `delegate` | Only this address can call execute() | Agent wallet address |
-
-## Links
-
-- **Contracts**: [CeloScan](https://celoscan.io/address/0x21a7d7A3D28750961321479f57596dd58520521F)
-- **Source**: [GitHub](https://github.com/AgentMotus/prism-protocol/tree/ethereum-root-identity)
-- **ERC-8004**: [8004scan.io](https://8004scan.io)
-- **ENS**: prism-protocol.eth
+## 9) Fast Handoff Prompt (for Cursor/OpenClaw agent)
+"Use SKILL.md in this repo. Checkout branch `ethereum-root-identity`. Set up Prism context wallet flow on Celo mainnet with strict caveats, run execute+revoke proof, maintain artifacts + identity matrix, and output tx hashes + receipts CID. Never store private keys in repo."
