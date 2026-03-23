@@ -345,6 +345,70 @@ agent/
 
 ---
 
+## ✅ What We Just Shipped (Current Sprint)
+
+### Hybrid PsyResearch Swarm (real run with 2 PDFs)
+- Ingested real research inputs into `research-inputs/`.
+- Generated:
+  - `research-inputs/research_draft.md`
+  - `research-inputs/validation_report.md`
+  - `research-inputs/human_signoff.md`
+  - `agent/research_swarm_run.json`
+- Published receipts bundle to IPFS/Filecoin:
+  - **CID:** `bafybeihg7zdj2slku6g6avfo6shte7bda6ezlgoofyn3fjpk7kyprmheey`
+  - Gateway: `https://w3s.link/ipfs/bafybeihg7zdj2slku6g6avfo6shte7bda6ezlgoofyn3fjpk7kyprmheey`
+
+### Role-based wallet expansion
+Created dedicated swarm role wallets (separate blast radius):
+- `validator`: `0x27ec91c68A7797C774C44923681794D5Eaa94773`
+- `publisher`: `0x1BeF0E6a26dE6EfCB6852A9dABdBa32FAB410391`
+
+### Reusable skills for other agents
+- Runtime skill (project root): `SKILL.md`
+- Swarm skill: `skills/psyresearch-swarm/SKILL.md`
+- Technical installable skill package:
+  - Source: `skills/prism-technical/`
+  - Packaged: `prism-technical.skill`
+
+---
+
+## 🧩 Agent Identity + Session Matrix (Submission-Ready)
+
+| Role | Session Label | Wallet | ENS | 8004 | Status |
+|---|---|---|---|---|---|
+| Orchestrator | `swarm-orchestrator` | `0x64608C2d5E4685830348e9155bAB423bf905E9c9` | `orchestrator.prism-protocol.eth` | pending | Active |
+| Research | `swarm-research` | `0xd0237E6B4aA31a1740E84423ed43A84D1Cb01fd8` | `agentmotus.prism-protocol.eth` | `3396` | Active |
+| Validator | `swarm-validator` | `0x27ec91c68A7797C774C44923681794D5Eaa94773` | `validator.prism-protocol.eth` | pending | Wallet ready |
+| Publisher | `swarm-publisher` | `0x1BeF0E6a26dE6EfCB6852A9dABdBa32FAB410391` | `publisher.prism-protocol.eth` | pending | Wallet ready |
+
+> Recommended: assign ENS + (optional) 8004 for validator/publisher before final demo recording.
+
+---
+
+## 🧪 Technical Skill Distribution (Cursor/OpenClaw)
+
+This repo now includes a reusable technical onboarding skill so any external agent can bootstrap Prism on the `ethereum-root-identity` branch.
+
+### Included assets
+- `prism-technical.skill` (portable package)
+- `skills/prism-technical/SKILL.md`
+- `skills/prism-technical/references/PSYRESEARCH_SWARM_RUNBOOK.md`
+
+### What this skill automates
+1. checkout + environment setup
+2. Foundry toolchain install
+3. role wallet + secure key storage path
+4. context wallet create/fund/execute/revoke on Celo
+5. ENS/8004 identity mapping checklist
+6. receipts + CID workflow
+
+### Security defaults
+- never commit private keys
+- keep keys in host-only path (`~/.config/prism/keys`, `chmod 600`)
+- rotate immediately if a key appears in logs/chat
+
+---
+
 ## 🛠️ Development
 
 ### Prerequisites
@@ -394,6 +458,15 @@ forge test
 
 **Total addressable: $40,000+**
 
+### Final Submission Checklist (Remaining)
+- [ ] Assign ENS subdomains for validator + publisher wallets
+- [ ] (Optional) register validator + publisher on ERC-8004
+- [ ] Update `SUBMISSION.md` with final EVM narrative + tx hashes + CID
+- [ ] Add ENS text record: `receipts_cid = bafybeihg7zdj2slku6g6avfo6shte7bda6ezlgoofyn3fjpk7kyprmheey`
+- [ ] Record 2–3 min demo video (sign → execute → revoke → ENS → CID proof)
+- [ ] Update frontend/web page to reflect final architecture and live evidence links
+- [ ] Submit on Devfolio using this branch/fork evidence
+
 ---
 
 ## 🔗 Links
@@ -405,6 +478,8 @@ forge test
 - **MetaMask Track Plan:** [docs/METAMASK_TRACK.md](./docs/METAMASK_TRACK.md)
 - **PsyResearch Swarm Runbook:** [docs/PSYRESEARCH_SWARM_RUNBOOK.md](./docs/PSYRESEARCH_SWARM_RUNBOOK.md)
 - **PsyResearch Swarm Skill:** [skills/psyresearch-swarm/SKILL.md](./skills/psyresearch-swarm/SKILL.md)
+- **Prism Technical Skill (source):** [skills/prism-technical/SKILL.md](./skills/prism-technical/SKILL.md)
+- **Prism Technical Skill (package):** [prism-technical.skill](./prism-technical.skill)
 
 ---
 
